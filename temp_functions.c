@@ -23,9 +23,9 @@ int data_processing (int *err_msg, Temperature *month, Temperature *year, char *
             fscanf(f,"%[^\n]",error);
             if (*err_msg == 1)
             {
-                printf("в строке:%d %d;%02d;%02d;%02d;%02d;",line_counter,y,m,d,h,mi);
-                if (t < -99 || t > 99)printf("%d значение вышло за пределы\n",t);
-                else printf("%s нет данных о температуре\n",error);
+                printf("РІ СЃС‚СЂРѕРєРµ:%d %d;%02d;%02d;%02d;%02d;",line_counter,y,m,d,h,mi);
+                if (t < -99 || t > 99)printf("%d Р·РЅР°С‡РµРЅРёРµ РІС‹С€Р»Рѕ Р·Р° РїСЂРµРґРµР»С‹\n",t);
+                else printf("%s РЅРµС‚ РґР°РЅРЅС‹С… Рѕ С‚РµРјРїРµСЂР°С‚СѓСЂРµ\n",error);
             }
         }
         else
@@ -113,50 +113,50 @@ int data_processing (int *err_msg, Temperature *month, Temperature *year, char *
         }
     }
     fclose(f);
-    printf("прочитано %d строк(и), из них %d с ошибками", line_counter, error_counter);
+    printf("РїСЂРѕС‡РёС‚Р°РЅРѕ %d СЃС‚СЂРѕРє(Рё), РёР· РЅРёС… %d СЃ РѕС€РёР±РєР°РјРё", line_counter, error_counter);
     if (line_counter > error_counter) return 1;
         else
         {
-        printf("\n\n !!!! Все данные в файле с ошибками !!!!\n");
+        printf("\n\n !!!! Р’СЃРµ РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»Рµ СЃ РѕС€РёР±РєР°РјРё !!!!\n");
         return 0;
         }
 }
 
-// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ВЫВОД ПОЛУЧЕННОЙ ИНОФРМАЦИИ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Р’Р«Р’РћР” РџРћР›РЈР§Р•РќРќРћР™ РРќРћР¤Р РњРђР¦РР -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 void print_year(Temperature *month, Temperature *year)
 {
-    char mon_name[15] = "Неизвестный";
+    char mon_name[15] = "РќРµРёР·РІРµСЃС‚РЅС‹Р№";
     printf("\n");
-    printf("Выборка за год:\n");
+    printf("Р’С‹Р±РѕСЂРєР° Р·Р° РіРѕРґ:\n");
     printf("------------------------------------------------------------------------------------------------\n");
-    printf("В %d году ", year->max.ye);
-    printf("среднегодовая температура составила: %d C\n",year->sum/year->count);
-    printf("Относительно среднегодовой температуры теплыми месяцами были:\n");
+    printf("Р’ %d РіРѕРґСѓ ", year->max.ye);
+    printf("СЃСЂРµРґРЅРµРіРѕРґРѕРІР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° СЃРѕСЃС‚Р°РІРёР»Р°: %d C\n",year->sum/year->count);
+    printf("РћС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЃСЂРµРґРЅРµРіРѕРґРѕРІРѕР№ С‚РµРјРїРµСЂР°С‚СѓСЂС‹ С‚РµРїР»С‹РјРё РјРµСЃСЏС†Р°РјРё Р±С‹Р»Рё:\n");
     for (size_t i = 1; i <= 12; i++)
     {
         if (month[i].sum / month[i].count >= (year->sum/year->count)) printf("%s ",month_name(&month[i].max.mon, mon_name));
     }
-    printf("\nмаксимальная температура составила %d град. и зафиксирована:\n", year->max.temp);
+    printf("\nРјР°РєСЃРёРјР°Р»СЊРЅР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° СЃРѕСЃС‚Р°РІРёР»Р° %d РіСЂР°Рґ. Рё Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅР°:\n", year->max.temp);
     for (size_t i = 1; i <= 12; i++)
     {
         if (year->max.temp == month[i].max.temp)
         {
             printf("%02d.%02d.%d ", month[i].max.day,month[i].max.mon, month[i].max.ye);
-            printf("в %02d ч.%02d мин.\n",month[i].max.hour, month[i].max.minute);
+            printf("РІ %02d С‡.%02d РјРёРЅ.\n",month[i].max.hour, month[i].max.minute);
         }
     }
-    printf("Относительно среднегодовой температуры холодными месяцами были:\n");
+    printf("РћС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЃСЂРµРґРЅРµРіРѕРґРѕРІРѕР№ С‚РµРјРїРµСЂР°С‚СѓСЂС‹ С…РѕР»РѕРґРЅС‹РјРё РјРµСЃСЏС†Р°РјРё Р±С‹Р»Рё:\n");
     for (size_t i = 1; i <= 12; i++)
     {
         if (month[i].sum / month[i].count < (year->sum/year->count)) printf("%s ",month_name(&month[i].min.mon, mon_name));
     }
-    printf("\nминимальная температура составила %d град. и зафиксирована:\n", year->min.temp);
+    printf("\nРјРёРЅРёРјР°Р»СЊРЅР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° СЃРѕСЃС‚Р°РІРёР»Р° %d РіСЂР°Рґ. Рё Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅР°:\n", year->min.temp);
     for (size_t i = 1; i <= 12; i++)
     {
         if (year->min.temp == month[i].min.temp)
         {
             printf("%02d.%02d.%d ", month[i].min.day,month[i].min.mon, month[i].min.ye);
-            printf("в %02d ч.%02d мин.\n",month[i].min.hour, month[i].min.minute);
+            printf("РІ %02d С‡.%02d РјРёРЅ.\n",month[i].min.hour, month[i].min.minute);
         }
     }
     printf("------------------------------------------------------------------------------------------------\n");
@@ -165,17 +165,17 @@ void print_year(Temperature *month, Temperature *year)
 
 void print_month (int *month_arg, Temperature *month)
 {
-    char mon_name[15] = "Неизвестный";
+    char mon_name[15] = "РќРµРёР·РІРµСЃС‚РЅС‹Р№";
     printf("\n");
-    printf("Выборка за %s:\n", month_name(month_arg, mon_name));
+    printf("Р’С‹Р±РѕСЂРєР° Р·Р° %s:\n", month_name(month_arg, mon_name));
     //printf("------------------------------------------------------------------------------------------------\n");
-    printf("среднемесячная температура составила: %d C\n",month[*month_arg].sum/ month[*month_arg].count);
-    printf("максимальная температура зафиксирована %02d.%02d.%d ", month[*month_arg].max.day,month[*month_arg].max.mon, month[*month_arg].max.ye);
-    printf("в %02d ч.%02d мин. ",month[*month_arg].max.hour, month[*month_arg].max.minute);
-    printf("и составила %d град.\n", month[*month_arg].max.temp);
-    printf("минимальная температура зафиксирована %02d.%02d.%d ", month[*month_arg].min.day,month[*month_arg].min.mon, month[*month_arg].min.ye);
-    printf("в %02d ч.%02d мин. ",month[*month_arg].min.hour, month[*month_arg].min.minute);
-    printf("и составила %d град.\n", month[*month_arg].min.temp);
+    printf("СЃСЂРµРґРЅРµРјРµСЃСЏС‡РЅР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° СЃРѕСЃС‚Р°РІРёР»Р°: %d C\n",month[*month_arg].sum/ month[*month_arg].count);
+    printf("РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅР° %02d.%02d.%d ", month[*month_arg].max.day,month[*month_arg].max.mon, month[*month_arg].max.ye);
+    printf("РІ %02d С‡.%02d РјРёРЅ. ",month[*month_arg].max.hour, month[*month_arg].max.minute);
+    printf("Рё СЃРѕСЃС‚Р°РІРёР»Р° %d РіСЂР°Рґ.\n", month[*month_arg].max.temp);
+    printf("РјРёРЅРёРјР°Р»СЊРЅР°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅР° %02d.%02d.%d ", month[*month_arg].min.day,month[*month_arg].min.mon, month[*month_arg].min.ye);
+    printf("РІ %02d С‡.%02d РјРёРЅ. ",month[*month_arg].min.hour, month[*month_arg].min.minute);
+    printf("Рё СЃРѕСЃС‚Р°РІРёР»Р° %d РіСЂР°Рґ.\n", month[*month_arg].min.temp);
     printf("------------------------------------------------------------------------------------------------");
 }
 void print_all_month (Temperature *month)
@@ -188,18 +188,18 @@ void print_all_month (Temperature *month)
 
 char* month_name(int *mon_numb, char name[])
 {
-    char s1[] = "Январь";
-    char s2[] = "Февраль";
-    char s3[] = "Март";
-    char s4[] = "Апрель";
-    char s5[] = "Май";
-    char s6[] = "Июнь";
-    char s7[] = "Июль";
-    char s8[] = "Август";
-    char s9[] = "Сентябрь";
-    char s10[] = "Октябрь";
-    char s11[] = "Ноябрь";
-    char s12[] = "Декабрь";
+    char s1[] = "РЇРЅРІР°СЂСЊ";
+    char s2[] = "Р¤РµРІСЂР°Р»СЊ";
+    char s3[] = "РњР°СЂС‚";
+    char s4[] = "РђРїСЂРµР»СЊ";
+    char s5[] = "РњР°Р№";
+    char s6[] = "РСЋРЅСЊ";
+    char s7[] = "РСЋР»СЊ";
+    char s8[] = "РђРІРіСѓСЃС‚";
+    char s9[] = "РЎРµРЅС‚СЏР±СЂСЊ";
+    char s10[] = "РћРєС‚СЏР±СЂСЊ";
+    char s11[] = "РќРѕСЏР±СЂСЊ";
+    char s12[] = "Р”РµРєР°Р±СЂСЊ";
     char s0[] = "--------";
     switch(*mon_numb)
     {
