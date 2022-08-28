@@ -196,7 +196,7 @@ char* month_name(int *mon_numb, char name[])
     char s6[] = "Июнь";
     char s7[] = "Июль";
     char s8[] = "Август";
-    char s9[] = "Сентярь";
+    char s9[] = "Сентябрь";
     char s10[] = "Октябрь";
     char s11[] = "Ноябрь";
     char s12[] = "Декабрь";
